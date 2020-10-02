@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:if="${ok}">
+    <h1 th:text="${ok}"></h1>
+</div>
+
+<a th:href="@{/library/create}" th:text="Pay"></a>
+
+<form action="/library/search">
+    <label>Input text:</label>
+    <input type="text" th:name="inputSearch">
+</form>
+<div class="container-fluid">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>bookTitle</th>
+            <th>author</th>
+            <th>releaseDate</th>
+            <th>bookCode</th>
+            <th>Borrow</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="library:${libraryList}">
+            <td th:text="${library.getId()}">${d}</td>
+            <td th:text="${library.getBookTitle()}"></td>
+            <td th:text="${library.getAuthor()}"></td>
+            <td th:text="${library.getReleaseDate()}"></td>
+            <td th:text="${library.getBookCode()}"></td>
+            <td ><a th:href="@{/library/borrow/{id}(id=${library.id})}">borrow</a></td>
+            <td ><a th:href="@{/library/delete/{id}(id=${library.id})}">delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:href="@{'/library'(page=${libraryList.number - 1})}" th:if="${libraryList.hasPrevious()}">Previous</a>
+        <span th:text="${libraryList.number + 1}"></span>/<span th:text="${libraryList.totalPages}"></span>
+        <a th:href="@{'/library'(page=${libraryList.number + 1})}" th:if="${libraryList.hasNext()}">Next</a>
+    </div>
+</div>
+</body>
+</html>

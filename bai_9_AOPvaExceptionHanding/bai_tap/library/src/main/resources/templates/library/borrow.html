@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/library/borrow}" method="post" th:object="${library}">
+    <br/>
+    <input type="hidden" th:field="*{id}">
+    <label>bookTitle:</label>
+    <input type="text" th:field="*{bookTitle}">
+    <br/>
+    <label>author:</label>
+    <input type="text"  th:field="*{author}">
+    <br/>
+    <label>releaseDate:</label>
+    <input type="text"  th:field="*{releaseDate}">
+    <br/>
+    <label>bookCode:</label>
+    <input type="text"  th:field="*{bookCode}" >
+    <br/>
+    <button type="submit">Borrow</button>
+</form>
+</body>
+</html>
