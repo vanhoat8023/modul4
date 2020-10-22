@@ -201,7 +201,7 @@
                         <td th:text="${customer.getId()}">${d}</td>
                         <td th:text="${customer.getFirstName()}"></td>
                         <td th:text="${customer.getLastName()}"></td>
-                        <td th:text="${customer.addressCustomer.addressCustomer}"></td>
+                        <td th:text="${customer.addressCustomer}"></td>
                         <td ><a th:href="@{/customer/edit/{id}(id=${customer.id})}"><i class="material-icons">&#xE254;</i></a></td>
                         <td ><a th:href="@{/customer/delete/{id}(id=${customer.id})}"><i class="material-icons">&#xE872;</i></a></td>
                     </tr>

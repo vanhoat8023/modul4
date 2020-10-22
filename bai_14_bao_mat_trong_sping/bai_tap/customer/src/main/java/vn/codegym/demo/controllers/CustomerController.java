@@ -41,9 +41,9 @@ public class CustomerController {
             model.addAttribute("search", inputSearch);
             model.addAttribute("keySearch", key);
         } else {
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String password = passwordEncoder.encode("123");
-            accountCustomerService.save(new AccountCustomer("hoat", password, "USER", true));
+//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//            String password = passwordEncoder.encode("123");
+//            accountCustomerService.save(new AccountCustomer("hoat", password, "USER", true));
             List<AddressCustomer> addressCustomers = addressCustomerService.findAll();
             model.addAttribute("customerList", customerService.findAll(pageable));
             model.addAttribute("listAddress", addressCustomers);

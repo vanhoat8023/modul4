@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/home::css}">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{/home::header}">
+</div>
+<div class="container-lg">
+    <div class="table-responsive">
+        <div class="table-wrapper" style="background-color:#f7f5f2 ">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6"><h2>Contract</h2></div>
+                    <div class="col-sm-3">
+                        <a th:href="@{/contract/create}" class="btn btn-success" ><i class="fa fa-plus"></i>
+                            <span>Add New Contract</span></a>
+                    </div>
+                    <div class="col-sm-3">
+                        <form action="/contract/search" method="post">
+                            <div class="search-box">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search by Name" name="keyword">
+                                    <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped" id="tableStudent">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Start day</th>
+                    <th>End day</th>
+                    <th>Deposit</th>
+                    <th>Total Money</th>
+                    <th>edit</th>
+                    <th>delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <div th:if="${ok}">
+                    <p th:text="${ok}" style="color: red"></p>
+                </div>
+                <tr th:each="contract:${listContract}">
+                    <td th:text="${contract.id_contract}">${d}</td>
+                    <td th:text="${contract.start_date}"></td>
+                    <td th:text="${contract.end_date}"></td>
+                    <td th:text="${contract.deposit}"></td>
+                    <td th:text="${contract.totalMoney}"></td>
+                    <td><a th:href="@{/contract/edit/{id}(id=${contract.id_contract})}" class="material-icons">
+                        <i class="material-icons">&#xE254;</i></a></td>
+                    <td><a th:href="@{/contract/delete/{id}(id=${contract.id_contract})}">
+                        <i class="material-icons">&#xE872;</i></a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <a th:href="@{'/customer'(page=${listContract.number - 1})}" th:if="${listContract.hasPrevious()}">Previous</a>
+                <span th:text="${listContract.number + 1}"></span>/<span th:text="${listContract.totalPages}"></span>
+                <a th:href="@{'/customer'(page=${listContract.number + 1})}" th:if="${listContract.hasNext()}">Next</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

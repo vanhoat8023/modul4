@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/list::css}">
+    <title>Title</title>
+</head>
+<body>
+
+<div >
+    <div class="modal-content">
+        <form th:action="@{/edit}" method="post" th:object="${question}">
+            <div class="modal-header">
+                <h4 class="neon" style="margin: 0">edit new question</h4>
+                <a href="/home"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></a>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" th:field="*{id}">
+                <div class="form-group">
+                    <label>title:</label>
+                    <input type="text" class="form-control" th:field="*{title}">
+                    <!--                        <div><p style="color:red;" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></p></div>-->
+                </div>
+                <div class="form-group">
+                    <label>question :</label>
+                    <input type="text" class="form-control" th:field="*{question}">
+                </div>
+                <div class="form-group">
+                    <label>answer : </label>
+                    <input class="form-control"  type="text" th:field="*{answer}" >
+                </div>
+                <div class="form-group">
+                    <label> question type: </label>
+                    <select class="col-8 form-control" th:field="*{questionType}" >
+                        <option th:each="type: ${listQuestionType}"  th:value="${type.id}" th:text="${type.name}"></option>
+                    </select>
+                    <!--                        <div><p style="color:red;" th:if="${#fields.hasErrors('IdCard')}" th:errors="*{IdCard}"></p></div>-->
+                </div>
+                <div class="form-group">
+                    <label> day create : </label>
+                    <input type="text" class="form-control" th:field="*{dateCreate}">
+                    <!--                        <div><p style="color:red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p></div>-->
+                </div>
+                <div class="form-group">
+                    <label>  nguoi hoi: </label>
+                    <select class="col-8 form-control" th:field="*{user}" >
+                        <option th:each="type: ${listUser}"  th:value="${type.id}" th:text="${type.userName}"></option>
+                    </select>
+                    <!--                        <div><p style="color:red;" th:if="${#fields.hasErrors('IdCard')}" th:errors="*{IdCard}"></p></div>-->
+                </div>
+                <div class="form-group">
+                    <label> status : </label>
+                    <input type="text" class="form-control" th:field="*{status}">
+                    <!--                        <div><p style="color:red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p></div>-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="/home"><input type="button" class="cancel" data-dismiss="modal" value="Cancel"></a>
+                <input type="submit" class="add" value="edit">
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

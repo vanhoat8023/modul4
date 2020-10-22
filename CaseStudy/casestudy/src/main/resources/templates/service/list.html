@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/home::css}">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{/home::header}">
+
+</div>
+<div class="container-lg">
+    <div class="table-responsive">
+        <div class="table-wrapper" style="background-color:#f7f5f2 ">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6"><h2>Service</h2></div>
+                    <div class="col-sm-3">
+                        <a th:href="@{/service/create}" class="btn btn-success" ><i class="fa fa-plus"></i>
+                            <span>Add New Product</span></a>
+                    </div>
+                    <div class="col-sm-3">
+                        <form action="/service/search" method="post">
+                            <div class="search-box">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search by Name" name="keyword">
+                                    <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped" id="tableStudent">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>area</th>
+                    <th>cost</th>
+                    <th>max people</th>
+                    <th>name service type</th>
+                    <th>edit</th>
+                    <th>delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <div th:if="${ok}">
+                    <p th:text="${ok}" style="color: red"></p>
+                </div>
+                <tr th:each="service:${listService}">
+                    <td th:text="${service.getId_service()}">${d}</td>
+                    <td th:text="${service.getName()}"></td>
+                    <td th:text="${service.getArea()}"></td>
+                    <td th:text="${service.getCost()}"></td>
+                    <td th:text="${service.getMax_people()}"></td>
+                    <td th:text="${service.getServiceType().getName()}"></td>
+                    <td><a th:href="@{/service/edit/{id}(id=${service.id_service})}" class="material-icons">
+                        <i class="material-icons">&#xE254;</i></a></td>
+                    <td><a th:href="@{/service/delete/{id}(id=${service.id_service})}">
+                        <i class="material-icons">&#xE872;</i></a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <a th:href="@{'/customer'(page=${listService.number - 1})}" th:if="${listService.hasPrevious()}">Previous</a>
+                <span th:text="${listService.number + 1}"></span>/<span th:text="${listService.totalPages}"></span>
+                <a th:href="@{'/customer'(page=${listService.number + 1})}" th:if="${listService.hasNext()}">Next</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

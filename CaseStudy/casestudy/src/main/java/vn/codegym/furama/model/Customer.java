@@ -2,6 +2,10 @@ package vn.codegym.furama.model;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+
+import java.time.LocalDate;
+import java.time.Year;
+import java.util.List;
 import java.util.regex.Pattern;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -23,11 +27,19 @@ public class Customer implements Validator {
     @Email(message = "email is not format")
     private String email;
     private String address;
+    @ManyToOne
+    @JoinColumn(name = "id_customer_type")
+    private CustomerType customerType;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Contract> contracts;
 
     public Customer() {
     }
 
-    public Customer(String idCode, String name, String birthday, String gender, String id_card, String phone, String email, String address) {
+    public Customer(String idCode, String name, String birthday, String gender, String id_card, String phone,
+                    @Email(message = "email is not format") String email, String address, CustomerType customerType,
+                    List<Contract> contracts) {
         this.idCode = idCode;
         this.name = name;
         this.birthday = birthday;
@@ -36,6 +48,20 @@ public class Customer implements Validator {
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.customerType = customerType;
+        this.contracts = contracts;
+    }
+
+    public CustomerType getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(CustomerType customerType) {
+        this.customerType = customerType;
+    }
+
+    public List<Contract> getContracts() {
+        return contracts;
     }
 
     public long getId() {
@@ -122,5 +148,24 @@ public class Customer implements Validator {
         if (!patternPhone.matcher(customer.getPhone()).matches()){
             errors.rejectValue("phone","phone.range");
         }
+//        Date date; // your date
+//// Choose time zone in which you want to interpret your Date
+//        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
+//        cal.setTime(date);
+//        int year = cal.get(Calendar.YEAR);
+//        int month = cal.get(Calendar.MONTH);
+//        int day = cal.get(Calendar.DAY_OF_MONTH);
+//// etc.
+//        boolean check = false;
+//        int yearNow = Year.now().getValue();
+//        System.err.println(yearNow);
+//        String[] stringDay = birthday.split("/");
+//        int year =yearNow- Integer.parseInt(stringDay[2]);
+//        int month = Integer.parseInt(stringDay[1]);
+//        int total = year * 12 + month;
+//        if (total > 216) {//1500
+//            check = true;
+//        }
+//        return check;
     }
 }

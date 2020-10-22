@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/home::css}">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{/home::header}">
+</div>
+<div class="container-lg">
+    <div class="table-responsive">
+        <div class="table-wrapper" style="background-color:#f7f5f2 ">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6"><h2>Employee</h2></div>
+                    <div class="col-sm-3">
+                        <a th:href="@{/employee/create}" class="btn btn-success" ><i class="fa fa-plus"></i>
+                            <span>Add New Employee</span></a>
+                    </div>
+                    <div class="col-sm-3">
+                        <form action="/employee/search" method="post">
+                            <div class="search-box">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search by Name" name="keyword">
+                                    <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped" id="tableStudent">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>birthday</th>
+                    <th>id card</th>
+                    <th>salary</th>
+                    <th>phone</th>
+                    <th>email</th>
+                    <th>address</th>
+                    <th>edit</th>
+                    <th>delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <div th:if="${ok}">
+                    <p th:text="${ok}" style="color: red"></p>
+                </div>
+                <tr th:each="employee:${listEmployee}">
+                    <td th:text="${employee.id_employee}">${d}</td>
+                    <td th:text="${employee.name}"></td>
+                    <td th:text="${employee.birthday}"></td>
+                    <td th:text="${employee.id_card}"></td>
+                    <td th:text="${employee.salary}"></td>
+                    <td th:text="${employee.phone}"></td>
+                    <td th:text="${employee.email}"></td>
+                    <td th:text="${employee.address}"></td>
+                    <td><a th:href="@{/employee/edit/{id}(id=${employee.id_employee})}" class="material-icons">
+                        <i class="material-icons">&#xE254;</i></a></td>
+                    <td><a th:href="@{/employee/delete/{id}(id=${employee.id_employee})}">
+                        <i class="material-icons">&#xE872;</i></a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <a th:href="@{'/customer'(page=${listEmployee.number - 1})}" th:if="${listEmployee.hasPrevious()}">Previous</a>
+                <span th:text="${listEmployee.number + 1}"></span>/<span th:text="${listEmployee.totalPages}"></span>
+                <a th:href="@{'/customer'(page=${listEmployee.number + 1})}" th:if="${listEmployee.hasNext()}">Next</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

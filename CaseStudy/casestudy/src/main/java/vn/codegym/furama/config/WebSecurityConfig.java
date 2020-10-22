@@ -5,17 +5,18 @@
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 //import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.config.annotation.web.builders.WebSecurity;
 //import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 //import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import vn.codegym.demo.service.impl.AccountCustomerDetailImpl;
+//import vn.codegym.furama.service.account.AccountDetailImpl;
 //
 //@Configuration
 //@EnableWebSecurity
 //public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //
 //    @Autowired
-//    AccountCustomerDetailImpl accountCustomerDetail;
+//    AccountDetailImpl accountDetail;
 //
 //    @Bean
 //    public BCryptPasswordEncoder passwordEncoder(){
@@ -24,7 +25,7 @@
 //
 //    @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(accountCustomerDetail).passwordEncoder(passwordEncoder());
+//        auth.userDetailsService(accountDetail).passwordEncoder(passwordEncoder());
 //    }
 //
 //    @Override
@@ -32,12 +33,19 @@
 //        http
 //                .formLogin()
 ////                    .loginPage("/dang-nhap")
-//                    .defaultSuccessUrl("/customer/hello",true)
+//                .defaultSuccessUrl("/home",true)
 //                .and()
-//                    .authorizeRequests().antMatchers( "/customer/login","/customer").permitAll()
-//                    .anyRequest().authenticated()
+//                .authorizeRequests().antMatchers( "/login","/home").permitAll()
+//                .anyRequest().authenticated()
 //                .and()
-//                    .logout()
-//                    .permitAll();
+//                .logout()
+//                .permitAll();
+//    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web
+//                .ignoring()
+////                .antMatchers("/resources/**");
+//                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/image/**","/lib_bootstrap/**","/jquery/**","/fonts/**","/vendor/**");
 //    }
 //}

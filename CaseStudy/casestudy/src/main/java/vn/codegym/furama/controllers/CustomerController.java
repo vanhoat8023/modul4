@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.codegym.furama.model.Customer;
 import vn.codegym.furama.service.customer.CustomerService;
+import vn.codegym.furama.service.customer_type.CustomerTypeService;
 
 @Controller
 @RequestMapping("/customer")
@@ -18,26 +19,34 @@ public class CustomerController {
 
     @Autowired
     CustomerService customerService;
+    @Autowired
+    CustomerTypeService customerTypeService;
 
     @GetMapping
     public String showListCustomer(@RequestParam(required = false, defaultValue = "") String keyword, Model model,
                                    @PageableDefault(value = 5) Pageable pageable){
         if (!keyword.equals("")){
+            model.addAttribute("customerTypeList",customerTypeService.findAll());
             model.addAttribute("customerList", customerService.search(keyword, pageable));
-            model.addAttribute("customer", new Customer());
+            model.addAttribute("customerAdd", new Customer());
+            model.addAttribute("customerEdit", new Customer());
             return "/customer/list";
         }else {
+            model.addAttribute("customerTypeList",customerTypeService.findAll());
             model.addAttribute("customerList", customerService.findAll(pageable));
-            model.addAttribute("customer", new Customer());
+            model.addAttribute("customerAdd", new Customer());
+            model.addAttribute("customerEdit", new Customer());
             return "customer/list";
         }
     }
+
     @PostMapping("/create")
-    public String createCustomer(@Validated @ModelAttribute Customer customer, BindingResult bindingResult, Model model,
+    public String createCustomer(@Validated @ModelAttribute("customerAdd") Customer customer, BindingResult bindingResult, Model model,
                                  @PageableDefault(value = 5) Pageable pageable, RedirectAttributes redirectAttributes){
-        new Customer().validate(customer, bindingResult);
+//        new Customer().validate(customer, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("customerList", customerService.findAll(pageable));
+            model.addAttribute("customerEdit", new Customer());
             return "/customer/list";
         }
         customerService.save(customer);
@@ -45,7 +54,13 @@ public class CustomerController {
         return "redirect:/customer";
     }
     @PostMapping("/edit")
-    public String editCustomer(Customer customer, RedirectAttributes redirectAttributes){
+    public String editCustomer(@Validated @ModelAttribute("customerEdit") Customer customer, BindingResult bindingResult, Model model,
+                               @PageableDefault(value = 5) Pageable pageable, RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("customerList", customerService.findAll(pageable));
+            model.addAttribute("customerAdd", new Customer());
+            return "/customer/list";
+        }
         customerService.update(customer);
         redirectAttributes.addFlashAttribute("ok", "success!!!");
         return "redirect:/customer";

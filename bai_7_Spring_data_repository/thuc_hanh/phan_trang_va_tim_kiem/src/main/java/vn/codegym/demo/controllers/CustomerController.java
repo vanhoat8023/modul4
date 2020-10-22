@@ -28,7 +28,9 @@ public class CustomerController {
     AddressCustomerService addressCustomerService;
 
     @GetMapping
-    public String showList(@RequestParam(required = false, defaultValue = "") String inputSearch,@RequestParam(required = false, defaultValue = "") String key, Model model, @PageableDefault(value = 5) Pageable pageable) {
+    public String showList(@RequestParam(required = false, defaultValue = "") String inputSearch,
+                           @RequestParam(required = false, defaultValue = "") String key, Model model, @PageableDefault(value = 5)
+                                       Pageable pageable) {
         if (!inputSearch.equals("")) {
             model.addAttribute("customerList", customerService.search(inputSearch, key, pageable));
             model.addAttribute("search", inputSearch);
